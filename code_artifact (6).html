@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>洗髮粉人格測驗｜測出你的頭皮靈魂與生活特質</title>
+  <style>
+    :root {
+      --bg-color: #F4EFE6;
+      --card-bg: #FAF6F0;
+      --text-main: #3D2B1F;
+      --text-muted: #7A6250;
+      --border-dark: #5C4033;
+      --border-light: #A89582;
+      --primary-red: #8B0000;
+      --primary-red-hover: #A00000;
+      --accent-tan: #E8D9C5;
+      --accent-hover: #EFE4D3;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Georgia", "Noto Serif TC", "PMingLiU", serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      background-image: radial-gradient(#D3C5B4 0.75px, transparent 0.75px);
+      background-size: 16px 16px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 16px;
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 600px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .retro-badge {
+      background-color: var(--primary-red);
+      color: #FFFDF9;
+      font-size: 13px;
+      letter-spacing: 1px;
+      padding: 3px 12px;
+      border-radius: 20px;
+      border: 1px solid var(--border-dark);
+      display: inline-block;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      font-size: 26px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      border-bottom: 2px solid var(--border-dark);
+      padding-bottom: 8px;
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .vintage-card {
+      background: var(--card-bg);
+      border: 3px solid var(--border-dark);
+      box-shadow: 6px 6px 0px var(--text-main);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+
+    .vintage-border-inner {
+      border: 1px solid var(--border-light);
+      padding: 20px;
+      border-radius: 4px;
+    }
+
+    .option-btn {
+      background-color: var(--card-bg);
+      border: 2px solid var(--border-dark);
+      color: var(--text-main);
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin-bottom: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1.5;
+      text-align: left;
+      width: 100%;
+      cursor: pointer;
+      display: block;
+      box-shadow: 3px 3px 0px rgba(92, 64, 51, 0.2);
+      transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .option-btn:hover {
+      background-color: var(--accent-hover);
+      border-color: var(--primary-red);
+      box-shadow: 4px 4px 0px rgba(139, 0, 0, 0.25);
+    }
+
+    .option-btn.selected {
+      background-color: var(--accent-tan);
+      border-color: var(--primary-red);
+      font-weight: bold;
+      box-shadow: inset 2px 2px 4px rgba(0,0,0,0.1), 3px 3px 0px var(--primary-red);
+    }
+
+    .action-btn-primary {
+      background-color: var(--primary-red);
+      color: #FFFDF9;
+      border: 2px solid var(--text-main);
+      box-shadow: 4px 4px 0px var(--text-main);
+      padding: 12px 20px;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.15s ease;
+    }
+
+    .action-btn-primary:hover {
+      background-color: var(--primary-red-hover);
+    }
+
+    .action-btn-secondary {
+      background-color: #E6DCCE;
+      color: var(--text-main);
+      border: 2px solid var(--border-dark);
+      box-shadow: 3px 3px 0px var(--border-dark);
+      padding: 10px 16px;
+      font-size: 14px;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.15s ease;
+    }
+
+    .action-btn-secondary:hover {
+      background-color: #D8CCA8;
+    }
+
+    .action-btn-secondary:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .progress-bar-bg {
+      width: 100%;
+      background-color: #E3D7C5;
+      height: 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border-dark);
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .progress-bar-fill {
+      background-color: var(--primary-red);
+      height: 100%;
+      width: 20%;
+      transition: width 0.3s ease;
+    }
+
+    .result-icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background-color: #EBE0CE;
+      border: 2px solid var(--border-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 38px;
+      margin: 0 auto 16px auto;
+    }
+
+    .store-tag {
+      background-color: #EFE8DC;
+      border: 1px dashed var(--border-dark);
+      color: var(--text-main);
+      padding: 8px 12px;
+      border-radius: 4px;
+      font-weight: bold;
+      font-size: 14px;
+      display: inline-block;
+      margin: 4px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+    <header>
+      <span class="retro-badge">★ No. 1964 典藏版</span>
+      <h1>洗髮粉人格測驗</h1>
+      <p class="subtitle">測出你的頭皮靈魂與生活特質</p>
+    </header>
+
+    <main class="vintage-card">
+      <div class="vintage-border-inner">
+
+        <!-- ================= SCREEN 1: LANDING ================= -->
+        <div id="screen-landing" style="text-align: center;">
+          <div class="result-icon">🧼</div>
+          <p style="font-size: 16px; line-height: 1.8; color: var(--border-dark); margin-bottom: 24px;">
+            一份來自 1964 年的復古問券。<br/>
+            只需 5 道生活情境題，帶你探索內心的生活節奏，找到專屬於你的清爽靈魂解答！
+          </p>
+          <button id="btn-start" type="button" class="action-btn-primary" style="width: 100%;">
+            開始人格測驗
+          </button>
+        </div>
+
+        <!-- ================= SCREEN 2: QUIZ ================= -->
+        <div id="screen-quiz" class="hidden">
+          <div style="display: flex; justify-content: space-between; font-size: 13px; font-weight: bold; color: var(--text-muted); margin-bottom: 6px;">
+            <span id="quiz-step-text">問題 1 / 5</span>
+            <span id="quiz-progress-percent">20%</span>
+          </div>
+          <div class="progress-bar-bg">
+            <div id="quiz-progress-bar" class="progress-bar-fill"></div>
+          </div>
+
+          <h2 id="question-title" style="font-size: 18px; font-weight: bold; margin-bottom: 18px; padding-bottom: 8px; border-bottom: 1px dashed var(--border-light);">
+            載入問題中...
+          </h2>
+
+          <div id="options-container"></div>
+
+          <div style="display: flex; justify-content: space-between; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border-light);">
+            <button id="btn-prev" type="button" class="action-btn-secondary" disabled>← 上一題</button>
+            <button id="btn-next" type="button" class="action-btn-secondary" disabled>下一題 →</button>
+          </div>
+        </div>
+
+        <!-- ================= SCREEN 3: RESULT ================= -->
+        <div id="screen-result" class="hidden" style="text-align: center;">
+          <div id="result-emoji" class="result-icon">🌿</div>
+          <div style="display: inline-block; background-color: var(--accent-tan); border: 1px solid var(--border-dark); padding: 4px 12px; font-weight: bold; font-size: 14px; margin-bottom: 12px; border-radius: 4px;" id="result-trait">
+            人格特質：喜歡自然、舒服、放鬆
+          </div>
+          <h2 id="result-title" style="font-size: 24px; font-weight: 900; color: var(--primary-red); margin-bottom: 16px;">
+            🌿 清新自然派
+          </h2>
+
+          <div style="background-color: #F7F2EA; border: 1.5px solid var(--border-dark); padding: 16px; border-radius: 6px; text-align: left; margin-bottom: 20px; font-size: 15px; line-height: 1.7;" id="result-desc">
+            你追求純粹自然的節奏，喜歡陽光、草木與舒適無負擔的清爽感受。在你眼中，生活不需要過多複雜的添加，簡簡單單就是最美好的樣子。
+          </div>
+
+          <div style="background-color: var(--card-bg); border: 2px solid var(--primary-red); padding: 16px; border-radius: 6px; text-align: left; margin-bottom: 24px;">
+            <div style="font-weight: bold; color: var(--primary-red); font-size: 16px; margin-bottom: 8px;">
+              ★ 專屬耐斯洗髮粉推薦
+            </div>
+            <p id="result-recommend" style="font-size: 15px; font-weight: 600; line-height: 1.6; color: var(--text-main);">
+              你適合耐斯洗髮粉！經典洗髮粉帶來簡單、清爽的洗髮體驗，讓洗髮回歸自然純粹。
+            </p>
+          </div>
+
+          <div style="display: flex; gap: 12px; justify-content: center; margin-bottom: 30px;">
+            <button id="btn-share" type="button" class="action-btn-secondary" style="flex: 1;">複製結果</button>
+            <button id="btn-restart" type="button" class="action-btn-primary" style="flex: 1;">重新測驗</button>
+          </div>
+
+          <!-- ================= SALES CHANNELS AT THE VERY BOTTOM ================= -->
+          <div style="border-top: 2px dashed var(--border-dark); padding-top: 20px; text-align: left;">
+            <h3 style="font-size: 17px; font-weight: bold; color: var(--primary-red); margin-bottom: 12px; text-align: center;">
+              🛒 哪裡有賣耐斯洗髮粉？
+            </h3>
+            
+            <div style="margin-bottom: 12px;">
+              <div style="font-size: 13px; font-weight: bold; color: var(--text-muted); margin-bottom: 6px;">【實體門市通路】</div>
+              <div>
+                <span class="store-tag">🏪 寶雅 POYA</span>
+                <span class="store-tag">🏪 PXMart 全聯福利中心</span>
+                <span class="store-tag">🏪 大九九大賣場</span>
+                <span class="store-tag">🏪 家樂福 Carrefour</span>
+                <span class="store-tag">🏪 小北百貨</span>
+                <span class="store-tag">🏪 傳統柑仔店/雜貨店</span>
+              </div>
+            </div>
+
+            <div>
+              <div style="font-size: 13px; font-weight: bold; color: var(--text-muted); margin-bottom: 6px;">【線上購物平台】</div>
+              <div>
+                <span class="store-tag">🌐 耐斯官方購物網</span>
+                <span class="store-tag">🌐 全聯線上購</span>
+                <span class="store-tag">🌐 蝦皮官方旗艦店</span>
+                <span class="store-tag">🌐 momo 購物網</span>
+                <span class="store-tag">🌐 PChome 24h</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </main>
+
+    <footer style="text-align: center; font-size: 12px; color: var(--text-muted); font-weight: 600;">
+      © 1964-2026 耐斯經典洗髮粉 懷舊紀念版
+    </footer>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        id: 1,
+        title: "Q1｜如果明天突然放假，你最想怎麼度過？",
+        options: [
+          { text: "找個有綠意的地方散散步，享受陽光和微風", type: "NATURE" },
+          { text: "說走就走，安排一趟戶外小旅行", type: "OUTDOOR" },
+          { text: "找間有復古氛圍的咖啡廳，慢慢享受午後時光", type: "RETRO" },
+          { text: "待在家裡，好好休息，把生活整理得井井有條", type: "SIMPLE" }
+        ]
+      },
+      {
+        id: 2,
+        title: "Q2｜旅行時，你最期待什麼？",
+        options: [
+          { text: "欣賞山林、海邊等自然風景", type: "NATURE" },
+          { text: "登山、露營或探索沒去過的地方", type: "OUTDOOR" },
+          { text: "走訪老街、古蹟或特色老店", type: "RETRO" },
+          { text: "交通方便、行程簡單，想去哪就去哪", type: "SIMPLE" }
+        ]
+      },
+      {
+        id: 3,
+        title: "Q3｜以下哪種生活氛圍最吸引你？",
+        options: [
+          { text: "🌿 植物、陽光、微風，舒服又自然", type: "NATURE" },
+          { text: "🏕️ 背著背包出發，隨時準備探索新的地方", type: "OUTDOOR" },
+          { text: "📻 黑膠唱片、底片相機、老電影的懷舊氛圍", type: "RETRO" },
+          { text: "🧺 整潔簡單的空間，每樣東西都恰到好處", type: "SIMPLE" }
+        ]
+      },
+      {
+        id: 4,
+        title: "Q4｜挑選日常用品時，你最在意什麼？",
+        options: [
+          { text: "使用起來舒服自然，讓生活更放鬆", type: "NATURE" },
+          { text: "方便攜帶，旅行或戶外活動也能使用", type: "OUTDOOR" },
+          { text: "有經典特色，帶有熟悉的懷舊感", type: "RETRO" },
+          { text: "簡單好用、方便省事，功能最重要", type: "SIMPLE" }
+        ]
+      },
+      {
+        id: 5,
+        title: "Q5｜如果要選一種生活態度，你會選？",
+        options: [
+          { text: "「享受自然，讓生活慢下來。」", type: "NATURE" },
+          { text: "「勇敢出發，探索更多可能。」", type: "OUTDOOR" },
+          { text: "「保留經典，享受生活中的美好回憶。」", type: "RETRO" },
+          { text: "「簡單生活，把時間留給真正重要的事。」", type: "SIMPLE" }
+        ]
+      }
+    ];
+
+    const personalityResults = {
+      NATURE: {
+        title: "🌿 清新自然派",
+        emoji: "🌿",
+        trait: "人格特質：喜歡自然、舒服、放鬆",
+        desc: "你追求純粹自然的節奏，喜歡陽光、草木與舒適無負擔的清爽感受。在你眼中，生活不需要過多複雜的添加，簡簡單單就是最美好的樣子。",
+        recommend: "你適合耐斯洗髮粉！經典洗髮粉帶來簡單、清爽的洗髮體驗，讓洗髮回歸自然純粹。"
+      },
+      OUTDOOR: {
+        title: "🏕️ 戶外冒險派",
+        emoji: "🏕️",
+        trait: "人格特質：喜歡戶外、旅行、探索",
+        desc: "你擁有隨時準備出發的靈魂，熱愛露營、登山與探索未知的地方。你需要的是無重量負擔、能陪你走遍天涯海角的輕便夥伴。",
+        recommend: "你適合耐斯洗髮粉！輕巧的粉狀設計，無論旅行、露營或戶外活動，都能方便攜帶。"
+      },
+      RETRO: {
+        title: "📻 復古生活派",
+        emoji: "📻",
+        trait: "人格特質：喜歡懷舊、經典、復古",
+        desc: "你深諳經典的價值，喜歡有故事的事物、熟悉的溫度與記憶中的儀式感。對你而言，質樸而歷久彌新的品質才是真正的時尚。",
+        recommend: "你適合耐斯洗髮粉！經典洗髮粉承載熟悉的洗髮記憶，讓經典重新融入現代生活。"
+      },
+      SIMPLE: {
+        title: "🧺 簡約實用派",
+        emoji: "🧺",
+        trait: "人格特質：喜歡簡單、方便、實用",
+        desc: "你崇尚極簡主義，討厭繁瑣無意義的步驟。你追求效率與實用性，希望把寶貴的時間與精力留給生活中真正重要的事情。",
+        recommend: "你適合耐斯洗髮粉！簡單的粉狀設計與使用方式，減少繁複步驟，讓洗髮回歸簡單實用。"
+      }
+    };
+
+    let currentStep = 0;
+    let userAnswers = {};
+
+    const screenLanding = document.getElementById('screen-landing');
+    const screenQuiz = document.getElementById('screen-quiz');
+    const screenResult = document.getElementById('screen-result');
+
+    const btnStart = document.getElementById('btn-start');
+    const btnPrev = document.getElementById('btn-prev');
+    const btnNext = document.getElementById('btn-next');
+    const btnRestart = document.getElementById('btn-restart');
+    const btnShare = document.getElementById('btn-share');
+
+    const quizStepText = document.getElementById('quiz-step-text');
+    const quizProgressPercent = document.getElementById('quiz-progress-percent');
+    const quizProgressBar = document.getElementById('quiz-progress-bar');
+    const questionTitle = document.getElementById('question-title');
+    const optionsContainer = document.getElementById('options-container');
+
+    btnStart.addEventListener('click', () => {
+      screenLanding.classList.add('hidden');
+      screenQuiz.classList.remove('hidden');
+      currentStep = 0;
+      userAnswers = {};
+      renderQuestion();
+    });
+
+    btnPrev.addEventListener('click', () => {
+      if (currentStep > 0) {
+        currentStep--;
+        renderQuestion();
+      }
+    });
+
+    btnNext.addEventListener('click', () => {
+      if (currentStep < questions.length - 1) {
+        currentStep++;
+        renderQuestion();
+      } else {
+        calculateAndShowResult();
+      }
+    });
+
+    function renderQuestion() {
+      const q = questions[currentStep];
+      quizStepText.textContent = `問題 ${currentStep + 1} / ${questions.length}`;
+      const percent = Math.round(((currentStep + 1) / questions.length) * 100);
+      quizProgressPercent.textContent = `${percent}%`;
+      quizProgressBar.style.width = `${percent}%`;
+
+      questionTitle.textContent = q.title;
+      optionsContainer.innerHTML = '';
+
+      q.options.forEach((opt) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'option-btn';
+        if (userAnswers[currentStep] === opt.type) {
+          btn.classList.add('selected');
+        }
+
+        btn.textContent = opt.text;
+
+        btn.addEventListener('click', () => {
+          userAnswers[currentStep] = opt.type;
+          
+          Array.from(optionsContainer.children).forEach(child => child.classList.remove('selected'));
+          btn.classList.add('selected');
+          
+          btnNext.disabled = false;
+        });
+
+        optionsContainer.appendChild(btn);
+      });
+
+      btnPrev.disabled = (currentStep === 0);
+      btnNext.disabled = !userAnswers[currentStep];
+      
+      if (currentStep === questions.length - 1) {
+        btnNext.textContent = '看結果 →';
+      } else {
+        btnNext.textContent = '下一題 →';
+      }
+    }
+
+    function calculateAndShowResult() {
+      const counts = { NATURE: 0, OUTDOOR: 0, RETRO: 0, SIMPLE: 0 };
+      Object.values(userAnswers).forEach(type => {
+        if (counts[type] !== undefined) counts[type]++;
+      });
+
+      let winner = 'NATURE';
+      let maxCount = -1;
+      Object.keys(counts).forEach(key => {
+        if (counts[key] > maxCount) {
+          maxCount = counts[key];
+          winner = key;
+        }
+      });
+
+      const res = personalityResults[winner];
+
+      document.getElementById('result-emoji').textContent = res.emoji;
+      document.getElementById('result-trait').textContent = res.trait;
+      document.getElementById('result-title').textContent = res.title;
+      document.getElementById('result-desc').textContent = res.desc;
+      document.getElementById('result-recommend').textContent = res.recommend;
+
+      screenQuiz.classList.add('hidden');
+      screenResult.classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    btnRestart.addEventListener('click', () => {
+      screenResult.classList.add('hidden');
+      screenLanding.classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    btnShare.addEventListener('click', () => {
+      const dummy = document.createElement('input');
+      document.body.appendChild(dummy);
+      dummy.value = window.location.href;
+      dummy.select();
+      document.execCommand('copy');
+      document.body.removeChild(dummy);
+      
+      const origText = btnShare.textContent;
+      btnShare.textContent = '✓ 已複製測驗連結';
+      setTimeout(() => {
+        btnShare.textContent = origText;
+      }, 2000);
+    });
+  </script>
+</body>
+</html>
